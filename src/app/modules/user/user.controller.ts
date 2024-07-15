@@ -1,22 +1,18 @@
 import { Request, Response } from "express";
+import httpStatus from "http-status";
+import catchAsync from "../../shared/catchAsync";
+import sendResponse from "../../shared/sendResponse";
 import { userServices } from "./user.services";
 
-const userRegistration = async (req: Request, res: Response) => {
-  try {
-    const result = await userServices.userRegistration(req.body);
-    res.status(200).json({
-      success: true,
-      message: "User Registration Successfully",
-      data: result,
-    });
-  } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: error.message || "Something went wrong",
-      error: error,
-    });
-  }
-};
+const userRegistration = catchAsync(async (req: Request, res: Response) => {
+  const result = await userServices.userRegistration(req.body);
+  sendResponse(res, {
+    statusCode: httpStatus.CREATED,
+    success: true,
+    message: "User Registered Successfully",
+    data: result,
+  });
+});
 
 export const userController = {
   userRegistration,
