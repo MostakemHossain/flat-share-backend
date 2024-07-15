@@ -15,7 +15,7 @@ router.post(
 );
 router.get(
   "/",
-  //   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  auth(userRole.SUPER_ADMIN, userRole.ADMIN),
   userController.getAllUser
 );
 router.get("/:userId", userController.getSingleUser);
@@ -36,6 +36,12 @@ router.get(
   "/profile/me",
   auth(userRole.ADMIN, userRole.SUPER_ADMIN, userRole.USER),
   userController.getMyProfile
+);
+
+router.put(
+  "/update-role/:id",
+  auth(userRole.ADMIN, userRole.SUPER_ADMIN),
+  userController.updateRoleAndStatus
 );
 
 export const userRoutes = router;

@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient, User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import httpStatus from "http-status";
 import config from "../../config";
@@ -184,6 +184,32 @@ const getMyProfile = async (user: any) => {
   return result;
 };
 
+const updateRoleAndStatus = async (
+  payload: Partial<User>,
+  id: string,
+  user: any
+) => {
+  if (user.role === "SUPER_ADMIN") {
+    return prisma.user.update({
+      where: { id },
+      data: payload,
+      select: selectUserFields,
+    });
+  } else if (user.role === "ADMIN") {
+    if (payload.role === "SUPER_ADMIN") {
+      throw new Error(`Admin cannot change role to super_admin.`);
+    } else {
+      return prisma.user.update({
+        where: { id },
+        data: payload,
+        select: selectUserFields,
+      });
+    }
+  } else {
+    throw new Error(`User does not have permission to update roles.`);
+  }
+};
+
 export const userServices = {
   userRegistration,
   getAllUsers,
@@ -191,4 +217,5 @@ export const userServices = {
   deleteAUser,
   updateMyProfile,
   getMyProfile,
+  updateRoleAndStatus,
 };
