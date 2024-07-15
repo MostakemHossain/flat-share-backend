@@ -1,3 +1,11 @@
+export const userSearchAbleFields = ["email", "fullName", "userName"];
+export const userFilterAbleFields = [
+  "name",
+  "email",
+  "searchTerm",
+  "status",
+  "role",
+];
 export const selectUserFields = {
   id: true,
   fullName: true,

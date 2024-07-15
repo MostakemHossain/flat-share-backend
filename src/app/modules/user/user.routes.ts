@@ -10,5 +10,10 @@ router.post(
   validateRequest(userValidation.createUser),
   userController.userRegistration
 );
+router.get(
+  "/",
+  //   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  userController.getAllUser
+);
 
 export const userRoutes = router;
