@@ -4,7 +4,7 @@ import httpStatus from "http-status";
 import config from "../../config";
 import AppError from "../../errors/AppError";
 import { jwtHelpers } from "../../helpers/jwtHelpers";
-import { ILoginUser } from "./auth.interface";
+import { IChangePassword, ILoginUser } from "./auth.interface";
 const prisma = new PrismaClient();
 
 const loginUser = async (payload: ILoginUser) => {
@@ -84,7 +84,40 @@ const refreshToken = async (token: string) => {
   };
 };
 
+const changePassword = async (user: any, payload: IChangePassword) => {
+  const userData = await prisma.user.findFirstOrThrow({
+    where: {
+      email: user.email,
+      status: "ACTIVE",
+      isDeleted: false,
+    },
+  });
+  const isCorrectPassword = await bcrypt.compare(
+    payload.oldPassword,
+    userData.password
+  );
+  if (!isCorrectPassword) {
+    throw new AppError(httpStatus.INTERNAL_SERVER_ERROR, "Incorrect password");
+  }
+  const hashedPassword = await bcrypt.hash(
+    payload.newPassword,
+    Number(config.bcrypt_salt_rounds)
+  );
+  await prisma.user.update({
+    where: {
+      email: user.email,
+    },
+    data: {
+      password: hashedPassword,
+    },
+  });
+  return {
+    message: "Password changed successfully",
+  };
+};
+
 export const authService = {
   loginUser,
   refreshToken,
+  changePassword,
 };
