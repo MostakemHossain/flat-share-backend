@@ -32,4 +32,10 @@ router.patch(
   }
 );
 
+router.get(
+  "/profile/me",
+  auth(userRole.ADMIN, userRole.SUPER_ADMIN, userRole.USER),
+  userController.getMyProfile
+);
+
 export const userRoutes = router;

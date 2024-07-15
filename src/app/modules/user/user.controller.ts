@@ -64,6 +64,18 @@ const updateMyProfile = catchAsync(
     });
   }
 );
+const getMyProfile = catchAsync(
+  async (req: Request & { user?: any }, res: Response) => {
+    const user = req.user;
+    const result = await userServices.getMyProfile(user);
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "My Profile Retrieved Successfully",
+      data: result,
+    });
+  }
+);
 
 export const userController = {
   userRegistration,
@@ -71,4 +83,5 @@ export const userController = {
   getSingleUser,
   deleteAUser,
   updateMyProfile,
+  getMyProfile,
 };

@@ -172,10 +172,23 @@ const updateMyProfile = async (user: any, req: any) => {
   return result;
 };
 
+const getMyProfile = async (user: any) => {
+  const result = await prisma.user.findUniqueOrThrow({
+    where: {
+      email: user.email,
+    },
+    include: {
+      userProfile: true,
+    },
+  });
+  return result;
+};
+
 export const userServices = {
   userRegistration,
   getAllUsers,
   getSingleUser,
   deleteAUser,
   updateMyProfile,
+  getMyProfile,
 };
