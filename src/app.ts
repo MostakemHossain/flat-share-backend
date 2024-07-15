@@ -1,5 +1,6 @@
 import cors from "cors";
 import express, { Application } from "express";
+import globalErrorHandler from "./app/middlewares/globalErrorHandler";
 import { userRoutes } from "./app/modules/user/user.routes";
 
 const app: Application = express();
@@ -14,5 +15,8 @@ app.get("/", (req, res) => {
     message: "Flat Share API..........",
   });
 });
+
+// global error handler
+app.use(globalErrorHandler);
 
 export default app;

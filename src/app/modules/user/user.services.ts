@@ -5,7 +5,6 @@ import { selectUserFields } from "./user.constant";
 const prisma = new PrismaClient();
 
 const userRegistration = async (payload: any) => {
-  console.log(payload);
   const hashedPassword = await bcrypt.hash(payload.password, 10);
 
   const result = await prisma.user.create({
