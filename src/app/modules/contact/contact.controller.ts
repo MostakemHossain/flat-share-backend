@@ -20,9 +20,18 @@ const getAllContact = catchAsync(async (req: Request, res: Response) => {
   const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
   const result = await contactService.getAllContacts(filters, options);
   sendResponse(res, {
-    statusCode: httpStatus.CREATED,
+    statusCode: httpStatus.OK,
     success: true,
     message: "All Contact retrieved successfully!",
+    data: result,
+  });
+});
+const deleteAContact = catchAsync(async (req: Request, res: Response) => {
+  const result = await contactService.deleteAContact(req.params.id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Contact deleted successfully!",
     data: result,
   });
 });
@@ -30,4 +39,5 @@ const getAllContact = catchAsync(async (req: Request, res: Response) => {
 export const contactController = {
   createAContact,
   getAllContact,
+  deleteAContact,
 };

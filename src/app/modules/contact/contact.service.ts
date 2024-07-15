@@ -1,8 +1,8 @@
 import { Contact, Prisma, PrismaClient } from "@prisma/client";
 import { paginationHelper } from "../../helpers/paginationHelpers";
 import { TPagination } from "../../interfaces/pagination";
-import { IContactFilterRequest } from "./contact.interface";
 import { contactSearchAbleFields } from "./contact.constant";
+import { IContactFilterRequest } from "./contact.interface";
 const prisma = new PrismaClient();
 
 const createAContact = async (payload: Contact) => {
@@ -68,7 +68,17 @@ const getAllContacts = async (
   };
 };
 
+const deleteAContact = async (id: string) => {
+  const result = await prisma.contact.delete({
+    where: {
+      id,
+    },
+  });
+  return result;
+};
+
 export const contactService = {
   createAContact,
   getAllContacts,
+  deleteAContact,
 };
