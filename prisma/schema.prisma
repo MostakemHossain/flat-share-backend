@@ -13,7 +13,7 @@ model User {
   userName     String
   password     String
   email        String   @unique
-  profilePhoto Status?
+  profilePhoto String?
   isDeleted    Boolean  @default(false)
   status       Status   @default(ACTIVE)
   role         userRole @default(USER)

@@ -116,7 +116,7 @@ const updateMyProfile = async (user: any, req: any) => {
   const userData = await prisma.user.findUniqueOrThrow({
     where: {
       id: user.id,
-      status: user.ACTIVE,
+      status: "ACTIVE",
     },
   });
 
@@ -137,6 +137,39 @@ const updateMyProfile = async (user: any, req: any) => {
       );
     }
   }
+
+  const { fullName, userName, bio, profession, address, profilePhoto } =
+    req.body;
+
+  const result = await prisma.$transaction(async (tx) => {
+    const updatedUser = await tx.user.update({
+      where: { id: user.id },
+      data: {
+        fullName,
+        userName,
+        profilePhoto,
+      },
+    });
+
+    const updatedUserProfile = await tx.userProfile.upsert({
+      where: { userId: user.id },
+      update: {
+        bio,
+        profession,
+        address,
+      },
+      create: {
+        userId: user.id,
+        bio,
+        profession,
+        address,
+      },
+    });
+
+    return { updatedUser, updatedUserProfile };
+  });
+
+  return result;
 };
 
 export const userServices = {
