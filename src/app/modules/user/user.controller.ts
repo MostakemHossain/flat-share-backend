@@ -52,10 +52,23 @@ const deleteAUser = catchAsync(
     });
   }
 );
+const updateMyProfile = catchAsync(
+  async (req: Request & { user?: any }, res: Response) => {
+    const user = req.user;
+    const result = await userServices.updateMyProfile(user, req);
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "My Profile Updated Successfully",
+      data: result,
+    });
+  }
+);
 
 export const userController = {
   userRegistration,
   getAllUser,
   getSingleUser,
   deleteAUser,
+  updateMyProfile,
 };

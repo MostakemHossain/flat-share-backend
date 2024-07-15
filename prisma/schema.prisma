@@ -16,11 +16,28 @@ model User {
   profilePhoto Status?
   isDeleted    Boolean  @default(false)
   status       Status   @default(ACTIVE)
-  role         Role     @default(USER)
+  role         userRole @default(USER)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
+  userProfile userProfile?
+
   @@map("users")
+}
+
+model userProfile {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String @unique
+  bio        String @default("")
+  profession String @default("")
+  address    String @default("")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("userProfile")
 }
 
 enum Status {
@@ -28,7 +45,7 @@ enum Status {
   BLOCKED
 }
 
-enum Role {
+enum userRole {
   ADMIN
   USER
   SUPER_ADMIN

@@ -1,8 +1,11 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
+import httpStatus from "http-status";
 import config from "../../config";
+import AppError from "../../errors/AppError";
 import { paginationHelper } from "../../helpers/paginationHelpers";
 import { TPagination } from "../../interfaces/pagination";
+import { fileUploader } from "../../shared/fileUpload";
 import { selectUserFields, userSearchAbleFields } from "./user.constant";
 import { IUserFilterRequest } from "./user.interface";
 
@@ -109,9 +112,37 @@ const deleteAUser = async (id: string) => {
   return result;
 };
 
+const updateMyProfile = async (user: any, req: any) => {
+  const userData = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: user.id,
+      status: user.ACTIVE,
+    },
+  });
+
+  if (!userData) {
+    throw new AppError(httpStatus.BAD_REQUEST, "User does not exist!");
+  }
+
+  const file = req.file;
+
+  if (file) {
+    const uploadedProfileImage = await fileUploader.uploadToCloudinary(file);
+    if (uploadedProfileImage && uploadedProfileImage.secure_url) {
+      req.body.profilePhoto = uploadedProfileImage.secure_url;
+    } else {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        "Profile image upload failed!"
+      );
+    }
+  }
+};
+
 export const userServices = {
   userRegistration,
   getAllUsers,
   getSingleUser,
   deleteAUser,
+  updateMyProfile,
 };
