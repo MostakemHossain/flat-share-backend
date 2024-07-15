@@ -9,5 +9,6 @@ router.post(
   validateRequest(contactValidation.createContactValidationSchema),
   contactController.createAContact
 );
+router.get("/", contactController.getAllContact);
 
 export const contactRoutes = router;

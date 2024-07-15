@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
 import catchAsync from "../../shared/catchAsync";
+import pick from "../../shared/pick";
 import sendResponse from "../../shared/sendResponse";
+import { contactFilterAbleFields } from "./contact.constant";
 import { contactService } from "./contact.service";
 
 const createAContact = catchAsync(async (req: Request, res: Response) => {
@@ -13,7 +15,19 @@ const createAContact = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const getAllContact = catchAsync(async (req: Request, res: Response) => {
+  const filters = pick(req.query, contactFilterAbleFields);
+  const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
+  const result = await contactService.getAllContacts(filters, options);
+  sendResponse(res, {
+    statusCode: httpStatus.CREATED,
+    success: true,
+    message: "All Contact retrieved successfully!",
+    data: result,
+  });
+});
 
 export const contactController = {
   createAContact,
+  getAllContact,
 };
