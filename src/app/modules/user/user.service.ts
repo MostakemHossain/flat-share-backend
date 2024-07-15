@@ -85,7 +85,20 @@ const getAllUsers = async (
   };
 };
 
+const getSingleUser = async (id: string) => {
+  const result = await prisma.user.findUniqueOrThrow({
+    where: {
+      id,
+      isDeleted: false,
+      status: "ACTIVE",
+    },
+    select: selectUserFields,
+  });
+  return result;
+};
+
 export const userServices = {
   userRegistration,
   getAllUsers,
+  getSingleUser,
 };

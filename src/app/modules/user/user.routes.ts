@@ -15,5 +15,6 @@ router.get(
   //   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   userController.getAllUser
 );
+router.get("/:userId", userController.getSingleUser);
 
 export const userRoutes = router;
