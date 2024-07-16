@@ -17,5 +17,10 @@ router.get(
   auth(userRole.USER),
   bookingController.getMyBookingRequest
 );
+router.get(
+  "/all-booking-request",
+  //   auth(userRole.ADMIN,userRole.SUPER_ADMIN),
+  bookingController.getAllBookingRequest
+);
 
 export const bookingRoutes = router;

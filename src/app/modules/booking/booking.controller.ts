@@ -3,6 +3,8 @@ import httpStatus from "http-status";
 import catchAsync from "../../shared/catchAsync";
 import sendResponse from "../../shared/sendResponse";
 import { bookingService } from "./booking.service";
+import pick from "../../shared/pick";
+import { bookingsFilterAbleFields } from "./booking.constant";
 
 const postBookingRequest = catchAsync(
   async (req: Request & { user?: any }, res: Response) => {
@@ -28,8 +30,22 @@ const getMyBookingRequest = catchAsync(
     });
   }
 );
+const getAllBookingRequest = catchAsync(
+  async (req: Request & { user?: any }, res: Response) => {
+    const filters = pick(req.query, bookingsFilterAbleFields);
+    const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
+    const result = await bookingService.getAllBookingRequest(filters, options);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "ALL Booking Request retrieved Successfully",
+      data: result,
+    });
+  }
+);
 
 export const bookingController = {
   postBookingRequest,
   getMyBookingRequest,
+  getAllBookingRequest,
 };
