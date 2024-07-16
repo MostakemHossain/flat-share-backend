@@ -19,6 +19,7 @@ router.post(
 );
 
 router.get("/", flatController.getAllFlats);
+router.get("/:id", flatController.getAPostFlat);
 router.delete("/:id", flatController.deleteAPostFlat);
 
 export const flatRoutes = router;

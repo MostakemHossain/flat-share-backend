@@ -113,8 +113,15 @@ const deleteAPostFlat = async (id: string) => {
   });
   return result;
 };
+const getAPostFlat = async (id: string) => {
+  const result = await prisma.flat.findUniqueOrThrow({
+    where: { id },
+  });
+  return result;
+};
 export const flatService = {
   PostAFlat,
   getAllFlats,
   deleteAPostFlat,
+  getAPostFlat,
 };
