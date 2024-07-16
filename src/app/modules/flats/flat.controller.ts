@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
+import { pick } from "lodash";
+import { TPagination } from "../../interfaces/pagination";
 import catchAsync from "../../shared/catchAsync";
 import sendResponse from "../../shared/sendResponse";
+import { flatFilterAbleFields } from "./flat.constant";
 import { flatService } from "./flat.service";
 
 const PostAFlat = catchAsync(
@@ -16,7 +19,25 @@ const PostAFlat = catchAsync(
     });
   }
 );
+const getAllFlats = catchAsync(
+  async (req: Request & { user?: any }, res: Response) => {
+    const filters = pick(req.query, flatFilterAbleFields);
+    const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
+
+    const result = await flatService.getAllFlats(
+      filters,
+      options as TPagination
+    );
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "All flats retrieved Successfully",
+      data: result,
+    });
+  }
+);
 
 export const flatController = {
   PostAFlat,
+  getAllFlats,
 };

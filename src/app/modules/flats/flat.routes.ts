@@ -18,4 +18,6 @@ router.post(
   }
 );
 
+router.get("/", flatController.getAllFlats);
+
 export const flatRoutes = router;
