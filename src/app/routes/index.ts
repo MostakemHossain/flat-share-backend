@@ -1,5 +1,6 @@
 import express from "express";
 import { authRoutes } from "../modules/auth/auth.routes";
+import { bookingRoutes } from "../modules/booking/booking.routes";
 import { contactRoutes } from "../modules/contact/contact.routes";
 import { flatRoutes } from "../modules/flats/flat.routes";
 import { userRoutes } from "../modules/user/user.routes";
@@ -22,6 +23,10 @@ const moduleRoutes = [
   {
     path: "/flats",
     route: flatRoutes,
+  },
+  {
+    path: "/bookings",
+    route: bookingRoutes,
   },
 ];
 

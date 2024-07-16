@@ -70,6 +70,22 @@ model Flat {
   updatedAt            DateTime @updatedAt
 }
 
+model Booking {
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String        @db.ObjectId
+  flatId    String        @db.ObjectId
+  status    BookingStatus @default(PENDING)
+  isBooked  Boolean       @default(false)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+enum BookingStatus {
+  PENDING
+  BOOKING
+  REJECTED
+}
+
 enum Status {
   ACTIVE
   BLOCKED
