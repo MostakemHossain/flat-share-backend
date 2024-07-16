@@ -45,9 +45,32 @@ const deleteTeamMember = async (id: string) => {
   return result;
 };
 
+const updateATeamMember = async (req: Request, id: string) => {
+  const file = req.file;
+  if (file) {
+    const uploadedProfileImage = await fileUploader.uploadToCloudinary(file);
+    if (uploadedProfileImage && uploadedProfileImage.secure_url) {
+      req.body.profilePhoto = uploadedProfileImage.secure_url;
+    } else {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        "Profile image upload failed!"
+      );
+    }
+  }
+  const result = await prisma.teamMember.update({
+    where: {
+      id,
+    },
+    data: req.body,
+  });
+  return result;
+};
+
 export const teamService = {
   createATeamMember,
   getAllTeamMember,
   getSingleTeamMember,
   deleteTeamMember,
+  updateATeamMember
 };

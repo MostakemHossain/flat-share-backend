@@ -26,8 +26,18 @@ router.get(
 );
 router.delete(
   "/:memberId",
-    auth(userRole.SUPER_ADMIN, userRole.ADMIN),
+  auth(userRole.SUPER_ADMIN, userRole.ADMIN),
   teamController.deleteTeamMember
+);
+
+router.put(
+  "/update-a-team-member/:memberId",
+  //   auth(userRole.SUPER_ADMIN, userRole.ADMIN),
+  fileUploader.upload.single("file"),
+  (req: Request, res: Response, next: NextFunction) => {
+    req.body = JSON.parse(req.body.data);
+    return teamController.updateATeamMember(req, res, next);
+  }
 );
 
 export const teamRoutes = router;
