@@ -7,12 +7,22 @@ const router = express.Router();
 
 router.post(
   "/create-a-team-member",
-//   auth(userRole.SUPER_ADMIN, userRole.ADMIN),
+  auth(userRole.SUPER_ADMIN, userRole.ADMIN),
   fileUploader.upload.single("file"),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = JSON.parse(req.body.data);
     return teamController.createATeamMember(req, res, next);
   }
+);
+router.get(
+  "/",
+  //   auth(userRole.SUPER_ADMIN, userRole.ADMIN),
+  teamController.getALLTeamMember
+);
+router.get(
+  "/:memberId",
+  //   auth(userRole.SUPER_ADMIN, userRole.ADMIN),
+  teamController.getSingleTeamMember
 );
 
 export const teamRoutes = router;

@@ -13,7 +13,27 @@ const createATeamMember = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const getALLTeamMember = catchAsync(async (req: Request, res: Response) => {
+  const result = await teamService.getAllTeamMember();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Team members are retrieved Successfully",
+    data: result,
+  });
+});
+const getSingleTeamMember = catchAsync(async (req: Request, res: Response) => {
+  const result = await teamService.getSingleTeamMember(req.params.memberId);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Team member is retrieved Successfully",
+    data: result,
+  });
+});
 
 export const teamController = {
   createATeamMember,
+  getALLTeamMember,
+  getSingleTeamMember,
 };

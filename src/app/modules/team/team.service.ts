@@ -24,6 +24,21 @@ const createATeamMember = async (req: Request) => {
   return result;
 };
 
+const getAllTeamMember = async () => {
+  const result = await prisma.teamMember.findMany({});
+  return result;
+};
+const getSingleTeamMember = async (id: string) => {
+  const result = await prisma.teamMember.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
+  return result;
+};
+
 export const teamService = {
   createATeamMember,
+  getAllTeamMember,
+  getSingleTeamMember,
 };
