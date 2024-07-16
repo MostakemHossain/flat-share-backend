@@ -37,7 +37,21 @@ const getAllFlats = catchAsync(
   }
 );
 
+const deleteAPostFlat = catchAsync(
+  async (req: Request & { user?: any }, res: Response) => {
+    const user = req.user;
+    const result = await flatService.deleteAPostFlat(req.params.id);
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Flat deleted Successfully",
+      data: result,
+    });
+  }
+);
+
 export const flatController = {
   PostAFlat,
   getAllFlats,
+  deleteAPostFlat,
 };

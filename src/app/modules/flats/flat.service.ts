@@ -107,7 +107,14 @@ const getAllFlats = async (
     data: result,
   };
 };
+const deleteAPostFlat = async (id: string) => {
+  const result = await prisma.flat.delete({
+    where: { id },
+  });
+  return result;
+};
 export const flatService = {
   PostAFlat,
   getAllFlats,
+  deleteAPostFlat,
 };
