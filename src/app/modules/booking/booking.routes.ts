@@ -24,7 +24,7 @@ router.get(
 );
 router.put(
   "/approved-booking/:bookingId",
-  //   auth(userRole.ADMIN, userRole.SUPER_ADMIN),
+  auth(userRole.ADMIN, userRole.SUPER_ADMIN),
   validateRequest(bookingValidation.approvalBookingValidationSchema),
   bookingController.approvalBookingRequest
 );
