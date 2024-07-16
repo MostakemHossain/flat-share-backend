@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Flat, Prisma, PrismaClient } from "@prisma/client";
 import { Request } from "express";
 import { paginationHelper } from "../../helpers/paginationHelpers";
 import { TPagination } from "../../interfaces/pagination";
@@ -119,9 +119,20 @@ const getAPostFlat = async (id: string) => {
   });
   return result;
 };
+
+const updateAFlat = async (id: string, payload: Partial<Flat>) => {
+  const result = await prisma.flat.update({
+    where: {
+      id: id,
+    },
+    data: payload,
+  });
+  return result;
+};
 export const flatService = {
   PostAFlat,
   getAllFlats,
   deleteAPostFlat,
   getAPostFlat,
+  updateAFlat,
 };

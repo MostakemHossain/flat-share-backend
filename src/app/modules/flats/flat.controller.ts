@@ -61,10 +61,23 @@ const getAPostFlat = catchAsync(
     });
   }
 );
+const updateAFlat = catchAsync(
+  async (req: Request & { user?: any }, res: Response) => {
+    const user = req.user;
+    const result = await flatService.updateAFlat(req.params.id, req.body);
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Flat Updated Successfully",
+      data: result,
+    });
+  }
+);
 
 export const flatController = {
   PostAFlat,
   getAllFlats,
   deleteAPostFlat,
   getAPostFlat,
+  updateAFlat,
 };
