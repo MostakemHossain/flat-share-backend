@@ -19,8 +19,14 @@ router.get(
 );
 router.get(
   "/all-booking-request",
-  //   auth(userRole.ADMIN,userRole.SUPER_ADMIN),
+  auth(userRole.ADMIN, userRole.SUPER_ADMIN),
   bookingController.getAllBookingRequest
+);
+router.put(
+  "/approved-booking/:bookingId",
+  //   auth(userRole.ADMIN, userRole.SUPER_ADMIN),
+  validateRequest(bookingValidation.approvalBookingValidationSchema),
+  bookingController.approvalBookingRequest
 );
 
 export const bookingRoutes = router;

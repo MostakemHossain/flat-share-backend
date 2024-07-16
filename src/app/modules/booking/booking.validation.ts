@@ -8,6 +8,23 @@ const postBookingRequestValidationSchema = z.object({
   }),
 });
 
+const BookingStatus = {
+  PENDING: "PENDING",
+  BOOKING: "BOOKING",
+  REJECTED: "REJECTED",
+} as const;
+
+const approvalBookingValidationSchema = z.object({
+  body: z.object({
+    status: z.enum([
+      BookingStatus.PENDING,
+      BookingStatus.BOOKING,
+      BookingStatus.REJECTED,
+    ]),
+  }),
+});
+
 export const bookingValidation = {
   postBookingRequestValidationSchema,
+  approvalBookingValidationSchema,
 };

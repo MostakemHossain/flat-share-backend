@@ -155,8 +155,19 @@ const getAllBookingRequest = async (
   };
 };
 
+const approvalBookingRequest = async (payload: any, id: string) => {
+  const result = await prisma.booking.update({
+    where: {
+      id,
+    },
+    data: payload,
+  });
+  return result;
+};
+
 export const bookingService = {
   postBookingRequest,
   getMyBookingRequest,
   getAllBookingRequest,
+  approvalBookingRequest,
 };

@@ -50,8 +50,23 @@ const getAllBookingRequest = catchAsync(
   }
 );
 
+const approvalBookingRequest = catchAsync(
+  async (req: Request & { user?: any }, res: Response) => {
+    const result = await bookingService.approvalBookingRequest(
+      req.body,
+      req.params.bookingId
+    );
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Approval Booking Successfully",
+      data: result,
+    });
+  }
+);
 export const bookingController = {
   postBookingRequest,
   getMyBookingRequest,
   getAllBookingRequest,
+  approvalBookingRequest,
 };
