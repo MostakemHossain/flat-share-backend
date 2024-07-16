@@ -32,7 +32,7 @@ router.delete(
 
 router.put(
   "/update-a-team-member/:memberId",
-  //   auth(userRole.SUPER_ADMIN, userRole.ADMIN),
+    auth(userRole.SUPER_ADMIN, userRole.ADMIN),
   fileUploader.upload.single("file"),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = JSON.parse(req.body.data);
