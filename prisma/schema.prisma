@@ -21,6 +21,7 @@ model User {
   updatedAt    DateTime @updatedAt
 
   userProfile userProfile?
+  bookings    Booking[]    @relation("UserBookings")
 
   @@map("users")
 }
@@ -68,6 +69,8 @@ model Flat {
   advanceAmount        Int
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
+
+  bookings Booking[] @relation("FlatBookings")
 }
 
 model Booking {
@@ -78,6 +81,23 @@ model Booking {
   isBooked  Boolean       @default(false)
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
+
+  user User @relation(fields: [userId], references: [id], name: "UserBookings")
+  flat Flat @relation(fields: [flatId], references: [id], name: "FlatBookings")
+}
+
+model TeamMember {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  email        String
+  contactNo    String
+  profilePhoto String?
+  role         String
+  facebookLink String?
+  twitterLink  String?
+  linkedinLink String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 enum BookingStatus {

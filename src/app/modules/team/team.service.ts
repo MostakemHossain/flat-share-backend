@@ -1,0 +1,29 @@
+import { PrismaClient } from "@prisma/client";
+import { Request } from "express";
+import httpStatus from "http-status";
+import AppError from "../../errors/AppError";
+import { fileUploader } from "../../shared/fileUpload";
+const prisma = new PrismaClient();
+
+const createATeamMember = async (req: Request) => {
+  const file = req.file;
+  if (file) {
+    const uploadedProfileImage = await fileUploader.uploadToCloudinary(file);
+    if (uploadedProfileImage && uploadedProfileImage.secure_url) {
+      req.body.profilePhoto = uploadedProfileImage.secure_url;
+    } else {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        "Profile image upload failed!"
+      );
+    }
+  }
+  const result = await prisma.teamMember.create({
+    data: req.body,
+  });
+  return result;
+};
+
+export const teamService = {
+  createATeamMember,
+};
