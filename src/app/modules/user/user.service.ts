@@ -17,6 +17,15 @@ const userRegistration = async (payload: any) => {
     Number(config.bcrypt_salt_rounds)
   );
 
+  const isUserExists = await prisma.user.findUnique({
+    where: {
+      email: payload.email,
+    },
+  });
+  if (isUserExists) {
+    throw new AppError(httpStatus.BAD_REQUEST, "User is Already exists");
+  }
+
   const result = await prisma.user.create({
     data: {
       fullName: payload.fullName,
