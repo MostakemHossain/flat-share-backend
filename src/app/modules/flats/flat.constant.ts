@@ -5,6 +5,7 @@ export const flatSearchAbleFields = [
   "squareFeet",
   "utilitiesDescription",
   "description",
+  "rent",
 ];
 export const flatFilterAbleFields = [
   "totalBedrooms",
@@ -14,4 +15,5 @@ export const flatFilterAbleFields = [
   "utilitiesDescription",
   "description",
   "searchTerm",
+  "rent",
 ];

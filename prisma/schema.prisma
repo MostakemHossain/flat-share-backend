@@ -45,6 +45,7 @@ model Contact {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   email     String
+  subject   String
   contactNo String
   message   String
   createdAt DateTime @default(now())
@@ -65,7 +66,7 @@ model Flat {
   photos               String[]
   rent                 Int
   parking              Boolean  @default(true)
-  availability         Boolean  @default(true)
+  availability         Boolean? @default(true)
   advanceAmount        Int
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt

@@ -13,6 +13,9 @@ const createContactValidationSchema = z.object({
     message: z.string({
       required_error: "Message is required",
     }),
+    subject: z.string({
+      required_error: "Subject is required",
+    }),
     contactNo: z.string({
       required_error: "Contact Number is required",
     }),
