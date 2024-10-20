@@ -7,6 +7,7 @@ const prisma = new PrismaClient();
 
 const createATeamMember = async (req: Request) => {
   const file = req.file;
+
   if (file) {
     const uploadedProfileImage = await fileUploader.uploadToCloudinary(file);
     if (uploadedProfileImage && uploadedProfileImage.secure_url) {
@@ -18,9 +19,21 @@ const createATeamMember = async (req: Request) => {
       );
     }
   }
+
+  // delete req.body.file;
   const result = await prisma.teamMember.create({
-    data: req.body,
+    data: {
+      name: req.body.name,
+      email: req.body.email,
+      contactNo: req.body.contactNo,
+      role: req.body.role,
+      facebookLink: req.body.facebookLink,
+      twitterLink: req.body.twitterLink,
+      linkedinLink: req.body.linkedinLink,
+      profilePhoto: req.body.profilePhoto,
+    },
   });
+
   return result;
 };
 
@@ -46,10 +59,12 @@ const deleteTeamMember = async (id: string) => {
 };
 
 const updateATeamMember = async (req: Request, id: string) => {
+  console.log(req.file);
   const file = req.file;
   if (file) {
     const uploadedProfileImage = await fileUploader.uploadToCloudinary(file);
     if (uploadedProfileImage && uploadedProfileImage.secure_url) {
+      delete req.body.profilePhoto;
       req.body.profilePhoto = uploadedProfileImage.secure_url;
     } else {
       throw new AppError(
@@ -62,7 +77,9 @@ const updateATeamMember = async (req: Request, id: string) => {
     where: {
       id,
     },
-    data: req.body,
+    data: {
+      ...req.body,
+    },
   });
   return result;
 };
@@ -72,5 +89,5 @@ export const teamService = {
   getAllTeamMember,
   getSingleTeamMember,
   deleteTeamMember,
-  updateATeamMember
+  updateATeamMember,
 };

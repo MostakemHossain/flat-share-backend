@@ -15,7 +15,7 @@ router.post(
 );
 router.get(
   "/",
-  auth(userRole.SUPER_ADMIN, userRole.ADMIN),
+  // auth(userRole.SUPER_ADMIN, userRole.ADMIN),
   userController.getAllUser
 );
 router.get("/:userId", userController.getSingleUser);

@@ -147,16 +147,28 @@ const updateMyProfile = async (user: any, req: any) => {
     }
   }
 
-  const { fullName, userName, bio, profession, address, profilePhoto } =
-    req.body;
-
+  const {
+    userName,
+    bio,
+    profession,
+    address,
+    profilePhoto,
+    phone,
+    gender,
+    name,
+  } = req.body;
+  console.log(req.body);
   const result = await prisma.$transaction(async (tx) => {
     const updatedUser = await tx.user.update({
       where: { id: user.id },
       data: {
-        fullName,
+        fullName: name,
         userName,
+        gender,
         profilePhoto,
+        phone,
+        bio,
+        address,
       },
     });
 
@@ -175,7 +187,7 @@ const updateMyProfile = async (user: any, req: any) => {
       },
     });
 
-    return { updatedUser, updatedUserProfile };
+    return updatedUser;
   });
 
   return result;

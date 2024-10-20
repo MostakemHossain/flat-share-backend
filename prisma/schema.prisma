@@ -14,6 +14,10 @@ model User {
   password     String
   email        String   @unique
   profilePhoto String?
+  address      String?  @default("")
+  phone        String?  @default("")
+  bio          String?  @default("")
+  gender       Gender   @default(OTHER)
   isDeleted    Boolean  @default(false)
   status       Status   @default(ACTIVE)
   role         userRole @default(USER)
@@ -110,6 +114,12 @@ enum BookingStatus {
 enum Status {
   ACTIVE
   BLOCKED
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
 }
 
 enum userRole {

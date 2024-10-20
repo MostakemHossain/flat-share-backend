@@ -13,7 +13,7 @@ router.post(
 );
 router.get(
   "/",
-  auth(userRole.ADMIN, userRole.SUPER_ADMIN),
+  // auth(userRole.ADMIN, userRole.SUPER_ADMIN),
   contactController.getAllContact
 );
 router.delete(

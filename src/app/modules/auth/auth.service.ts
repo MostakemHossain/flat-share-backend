@@ -73,7 +73,7 @@ const refreshToken = async (token: string) => {
       email: userData.email,
       role: userData.role,
     },
-    config.jwt__access_expire_in as string,
+    config.jwt__access_secret as string,
     config.jwt__access_expire_in as string
   );
 
