@@ -70,7 +70,7 @@ const refreshToken = (token) => __awaiter(void 0, void 0, void 0, function* () {
         id: userData.id,
         email: userData.email,
         role: userData.role,
-    }, config_1.default.jwt__access_expire_in, config_1.default.jwt__access_expire_in);
+    }, config_1.default.jwt__access_secret, config_1.default.jwt__access_expire_in);
     return {
         id: userData.id,
         name: userData.userName,

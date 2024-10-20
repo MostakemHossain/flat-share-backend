@@ -19,8 +19,6 @@ const createUserValidationSchema = zod_1.z.object({
             .string({
             required_error: "Password is required",
         })
-            .min(6, "Password must be at least 6 characters long")
-            .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/, "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"),
     }),
 });
 const updateUserValidationSchema = zod_1.z.object({

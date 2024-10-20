@@ -13,7 +13,9 @@ const user_controller_1 = require("./user.controller");
 const user_validtion_1 = require("./user.validtion");
 const router = express_1.default.Router();
 router.post("/create-user", (0, validateRequest_1.default)(user_validtion_1.userValidation.createUser), user_controller_1.userController.userRegistration);
-router.get("/", (0, auth_1.default)(client_1.userRole.SUPER_ADMIN, client_1.userRole.ADMIN), user_controller_1.userController.getAllUser);
+router.get("/", 
+// auth(userRole.SUPER_ADMIN, userRole.ADMIN),
+user_controller_1.userController.getAllUser);
 router.get("/:userId", user_controller_1.userController.getSingleUser);
 router.delete("/:userId", user_controller_1.userController.deleteAUser);
 router.patch("/profile/update-my-profile", (0, auth_1.default)(client_1.userRole.ADMIN, client_1.userRole.SUPER_ADMIN, client_1.userRole.USER), fileUpload_1.fileUploader.upload.single("file"), (req, res, next) => {

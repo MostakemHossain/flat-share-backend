@@ -35,6 +35,14 @@ const user_constant_1 = require("./user.constant");
 const prisma = new client_1.PrismaClient();
 const userRegistration = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const hashedPassword = yield bcrypt_1.default.hash(payload.password, Number(config_1.default.bcrypt_salt_rounds));
+    const isUserExists = yield prisma.user.findUnique({
+        where: {
+            email: payload.email,
+        },
+    });
+    if (isUserExists) {
+        throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "User is Already exists");
+    }
     const result = yield prisma.user.create({
         data: {
             fullName: payload.fullName,
@@ -139,14 +147,19 @@ const updateMyProfile = (user, req) => __awaiter(void 0, void 0, void 0, functio
             throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "Profile image upload failed!");
         }
     }
-    const { fullName, userName, bio, profession, address, profilePhoto } = req.body;
+    const { userName, bio, profession, address, profilePhoto, phone, gender, name, } = req.body;
+    console.log(req.body);
     const result = yield prisma.$transaction((tx) => __awaiter(void 0, void 0, void 0, function* () {
         const updatedUser = yield tx.user.update({
             where: { id: user.id },
             data: {
-                fullName,
+                fullName: name,
                 userName,
+                gender,
                 profilePhoto,
+                phone,
+                bio,
+                address,
             },
         });
         const updatedUserProfile = yield tx.userProfile.upsert({
@@ -163,7 +176,7 @@ const updateMyProfile = (user, req) => __awaiter(void 0, void 0, void 0, functio
                 address,
             },
         });
-        return { updatedUser, updatedUserProfile };
+        return updatedUser;
     }));
     return result;
 });

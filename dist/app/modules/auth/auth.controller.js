@@ -31,10 +31,10 @@ const auth_service_1 = require("./auth.service");
 const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield auth_service_1.authService.loginUser(req.body);
     const { refreshToken } = result, remainingData = __rest(result, ["refreshToken"]);
-    res.cookie("refreshToken", refreshToken, {
-        secure: false,
-        httpOnly: true,
-    });
+    // res.cookie("refreshToken", refreshToken, {
+    //   secure: false,
+    //   httpOnly: true,
+    // });
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,

@@ -29,8 +29,18 @@ const createATeamMember = (req) => __awaiter(void 0, void 0, void 0, function* (
             throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "Profile image upload failed!");
         }
     }
+    // delete req.body.file;
     const result = yield prisma.teamMember.create({
-        data: req.body,
+        data: {
+            name: req.body.name,
+            email: req.body.email,
+            contactNo: req.body.contactNo,
+            role: req.body.role,
+            facebookLink: req.body.facebookLink,
+            twitterLink: req.body.twitterLink,
+            linkedinLink: req.body.linkedinLink,
+            profilePhoto: req.body.profilePhoto,
+        },
     });
     return result;
 });
@@ -55,10 +65,12 @@ const deleteTeamMember = (id) => __awaiter(void 0, void 0, void 0, function* () 
     return result;
 });
 const updateATeamMember = (req, id) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.file);
     const file = req.file;
     if (file) {
         const uploadedProfileImage = yield fileUpload_1.fileUploader.uploadToCloudinary(file);
         if (uploadedProfileImage && uploadedProfileImage.secure_url) {
+            delete req.body.profilePhoto;
             req.body.profilePhoto = uploadedProfileImage.secure_url;
         }
         else {
@@ -69,7 +81,7 @@ const updateATeamMember = (req, id) => __awaiter(void 0, void 0, void 0, functio
         where: {
             id,
         },
-        data: req.body,
+        data: Object.assign({}, req.body),
     });
     return result;
 });
@@ -78,5 +90,5 @@ exports.teamService = {
     getAllTeamMember,
     getSingleTeamMember,
     deleteTeamMember,
-    updateATeamMember
+    updateATeamMember,
 };

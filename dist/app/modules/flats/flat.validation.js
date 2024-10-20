@@ -37,7 +37,7 @@ const createFlatValidationSchema = zod_1.z.object({
         .int()
         .min(0, "Rent must be at least 0"),
     parking: zod_1.z.boolean(),
-    availability: zod_1.z.boolean(),
+    availability: zod_1.z.boolean().optional(),
     advanceAmount: zod_1.z
         .number({
         required_error: "Advance amount is required",
@@ -90,7 +90,6 @@ const updateFlatValidationSchema = zod_1.z.object({
         .min(0, "Rent must be at least 0")
         .optional(),
     parking: zod_1.z.boolean().optional(),
-    availability: zod_1.z.boolean().optional(),
     advanceAmount: zod_1.z
         .number({
         required_error: "Advance amount is required",

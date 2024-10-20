@@ -8,6 +8,7 @@ exports.flatSearchAbleFields = [
     "squareFeet",
     "utilitiesDescription",
     "description",
+    "rent",
 ];
 exports.flatFilterAbleFields = [
     "totalBedrooms",
@@ -17,4 +18,5 @@ exports.flatFilterAbleFields = [
     "utilitiesDescription",
     "description",
     "searchTerm",
+    "rent",
 ];
