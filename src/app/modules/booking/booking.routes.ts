@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post(
   "/post-a-booking",
-  validateRequest(bookingValidation.postBookingRequestValidationSchema),
+  // validateRequest(bookingValidation.postBookingRequestValidationSchema),
   auth(userRole.USER),
   bookingController.postBookingRequest
 );

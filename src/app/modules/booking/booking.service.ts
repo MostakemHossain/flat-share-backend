@@ -43,7 +43,7 @@ const getMyBookingRequest = async (
     andConditions.push({
       AND: Object.keys(filterData).map((key) => {
         let value = (filterData as any)[key];
-        // Convert string to boolean if the key is isBooked
+
         if (key === "isBooked" && typeof value === "string") {
           value = value === "true";
         }
@@ -71,6 +71,9 @@ const getMyBookingRequest = async (
         : {
             createdAt: "desc",
           },
+    include: {
+      flat: true,
+    },
   });
 
   const total = await prisma.booking.count({
@@ -139,6 +142,10 @@ const getAllBookingRequest = async (
         : {
             createdAt: "desc",
           },
+    include: {
+      flat: true,
+      user: true,
+    },
   });
 
   const total = await prisma.booking.count({

@@ -11,7 +11,7 @@ app.use(express.json());
 
 const allowedOrigins = [
   "https://flat-match-frontend.vercel.app",
-  "http://localhost:3000",
+  // "http://localhost:3000",
 ];
 
 // CORS configuration
