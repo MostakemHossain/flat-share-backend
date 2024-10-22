@@ -169,15 +169,17 @@ const resetPassword = async (
     token,
     config.reset_password_token as string
   );
+
   if (!isValidToken) {
     throw new AppError(httpStatus.NOT_FOUND, "Invalid credentials");
   }
   // hashed password
+
   const hashedPassword: string = await bcrypt.hash(
     payload.password,
     Number(config.bcrypt_salt_rounds)
   );
-  await prisma.user.update({
+  const data = await prisma.user.update({
     where: {
       email: user.email,
     },
@@ -185,9 +187,7 @@ const resetPassword = async (
       password: hashedPassword,
     },
   });
-  return {
-    message: "Password change successfully",
-  };
+  return data;
 };
 
 export const authService = {
