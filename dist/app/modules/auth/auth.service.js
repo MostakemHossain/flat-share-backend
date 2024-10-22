@@ -142,7 +142,7 @@ const resetPassword = (token, payload) => __awaiter(void 0, void 0, void 0, func
     }
     // hashed password
     const hashedPassword = yield bcrypt_1.default.hash(payload.password, Number(config_1.default.bcrypt_salt_rounds));
-    yield prisma.user.update({
+    const data = yield prisma.user.update({
         where: {
             email: user.email,
         },
@@ -150,9 +150,7 @@ const resetPassword = (token, payload) => __awaiter(void 0, void 0, void 0, func
             password: hashedPassword,
         },
     });
-    return {
-        message: "Password change successfully",
-    };
+    return data;
 });
 exports.authService = {
     loginUser,

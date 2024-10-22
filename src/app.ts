@@ -10,7 +10,7 @@ const app: Application = express();
 app.use(express.json());
 
 const allowedOrigins = [
-  // "https://flat-match-frontend.vercel.app",
+  "https://flat-match-frontend.vercel.app",
   "http://localhost:3000",
 ];
 

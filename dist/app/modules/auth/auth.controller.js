@@ -31,10 +31,10 @@ const auth_service_1 = require("./auth.service");
 const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield auth_service_1.authService.loginUser(req.body);
     const { refreshToken } = result, remainingData = __rest(result, ["refreshToken"]);
-    // res.cookie("refreshToken", refreshToken, {
-    //   secure: false,
-    //   httpOnly: true,
-    // });
+    res.cookie("refreshToken", refreshToken, {
+        secure: false,
+        httpOnly: true,
+    });
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
@@ -73,12 +73,13 @@ const forgotPassword = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
 }));
 const resetPassword = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const token = req.headers.authorization || "";
-    yield auth_service_1.authService.resetPassword(token, req.body);
+    console.log(req.body);
+    const result = yield auth_service_1.authService.resetPassword(token, req.body);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
         message: "Password reset successfully!",
-        data: null,
+        data: result,
     });
 }));
 exports.authController = {
