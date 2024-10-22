@@ -5,6 +5,7 @@ import { contactRoutes } from "../modules/contact/contact.routes";
 import { flatRoutes } from "../modules/flats/flat.routes";
 import { teamRoutes } from "../modules/team/team.routes";
 import { userRoutes } from "../modules/user/user.routes";
+import { reviewRoutes } from "../modules/reviews/review.routes";
 
 const router = express.Router();
 
@@ -32,6 +33,10 @@ const moduleRoutes = [
   {
     path: "/teams",
     route: teamRoutes,
+  },
+  {
+    path: "/reviews",
+    route: reviewRoutes,
   },
 ];
 
