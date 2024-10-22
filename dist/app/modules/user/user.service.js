@@ -59,7 +59,6 @@ const getAllUsers = (params, options) => __awaiter(void 0, void 0, void 0, funct
     const { searchTerm } = params, filterData = __rest(params, ["searchTerm"]);
     const andConditions = [];
     if (searchTerm) {
-        console.log(searchTerm);
         andConditions.push({
             OR: user_constant_1.userSearchAbleFields.map((field) => ({
                 [field]: {
@@ -148,7 +147,6 @@ const updateMyProfile = (user, req) => __awaiter(void 0, void 0, void 0, functio
         }
     }
     const { userName, bio, profession, address, profilePhoto, phone, gender, name, } = req.body;
-    console.log(req.body);
     const result = yield prisma.$transaction((tx) => __awaiter(void 0, void 0, void 0, function* () {
         const updatedUser = yield tx.user.update({
             where: { id: user.id },

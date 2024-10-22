@@ -59,7 +59,6 @@ const deleteTeamMember = async (id: string) => {
 };
 
 const updateATeamMember = async (req: Request, id: string) => {
-  console.log(req.file);
   const file = req.file;
   if (file) {
     const uploadedProfileImage = await fileUploader.uploadToCloudinary(file);

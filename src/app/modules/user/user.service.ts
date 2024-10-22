@@ -47,7 +47,7 @@ const getAllUsers = async (
   const { searchTerm, ...filterData } = params;
   const andConditions: Prisma.UserWhereInput[] = [];
   if (searchTerm) {
-    console.log(searchTerm);
+
     andConditions.push({
       OR: userSearchAbleFields.map((field) => ({
         [field]: {
@@ -157,7 +157,6 @@ const updateMyProfile = async (user: any, req: any) => {
     gender,
     name,
   } = req.body;
-  console.log(req.body);
   const result = await prisma.$transaction(async (tx) => {
     const updatedUser = await tx.user.update({
       where: { id: user.id },

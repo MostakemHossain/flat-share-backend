@@ -65,7 +65,6 @@ const deleteTeamMember = (id) => __awaiter(void 0, void 0, void 0, function* () 
     return result;
 });
 const updateATeamMember = (req, id) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.file);
     const file = req.file;
     if (file) {
         const uploadedProfileImage = yield fileUpload_1.fileUploader.uploadToCloudinary(file);
