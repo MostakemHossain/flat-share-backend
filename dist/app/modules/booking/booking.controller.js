@@ -31,9 +31,7 @@ const postBookingRequest = (0, catchAsync_1.default)((req, res) => __awaiter(voi
 }));
 const getMyBookingRequest = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = req.user;
-    const filters = (0, pick_1.default)(req.query, booking_constant_1.bookingsFilterAbleFields);
-    const options = (0, pick_1.default)(req.query, ["limit", "page", "sortBy", "sortOrder"]);
-    const result = yield booking_service_1.bookingService.getMyBookingRequest(filters, options, user);
+    const result = yield booking_service_1.bookingService.getMyBookingRequest(user);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
