@@ -16,7 +16,6 @@ router.post(
 );
 router.get(
   "/",
-  auth(userRole.SUPER_ADMIN, userRole.ADMIN),
   teamController.getALLTeamMember
 );
 router.get(

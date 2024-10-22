@@ -12,7 +12,7 @@ const routes_1 = __importDefault(require("./app/routes"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 const allowedOrigins = [
-    // "https://flat-match-frontend.vercel.app",
+    "https://flat-match-frontend.vercel.app",
     "http://localhost:3000",
 ];
 // CORS configuration
