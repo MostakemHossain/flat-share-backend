@@ -21,13 +21,7 @@ const postBookingRequest = catchAsync(
 const getMyBookingRequest = catchAsync(
   async (req: Request & { user?: any }, res: Response) => {
     const user = req.user;
-    const filters = pick(req.query, bookingsFilterAbleFields);
-    const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
-    const result = await bookingService.getMyBookingRequest(
-      filters,
-      options,
-      user
-    );
+    const result = await bookingService.getMyBookingRequest(user);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
